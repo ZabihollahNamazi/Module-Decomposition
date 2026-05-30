@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
       textDiv.textContent = msg.text;
 
       const time = document.createElement("small");
-      time.textContent = msg.timeStamp;
+      time.textContent = new Date(msg.timeStamp).toLocaleTimeString();
 
       li.appendChild(usernameDiv);
       li.appendChild(textDiv);

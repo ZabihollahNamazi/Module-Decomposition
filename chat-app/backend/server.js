@@ -25,7 +25,7 @@ app.post("/", (req, res) => {
   messages.push({
     username,
     text,
-    timeStamp: new Date().toLocaleTimeString(),
+    timeStamp: new Date().toISOString(),
   });
 
   res.status(201).json({ success: true });
