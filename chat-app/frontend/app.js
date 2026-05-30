@@ -5,16 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const usernameInput = document.getElementById("username-input");
 
   const BACKEND_URL = "https://zabihollah-namazi-chat-app-backend.hosting.codeyourfuture.io";
+  const POLLING_INTERVAL_MS = 1000;
 
-  async function loadMessages() {
-    try {
-      const res = await fetch(BACKEND_URL);
-
-      if (!res.ok) {
-        throw new Error(`HTTP error: ${res.status}`);
-      }
-    const messages = await res.json();
-
+  function renderMessages(messages) {
     messagesList.innerHTML = "";
 
     messages.forEach((msg) => {
@@ -36,6 +29,19 @@ document.addEventListener("DOMContentLoaded", () => {
       li.appendChild(time);
       messagesList.appendChild(li);
     });
+  }
+
+  async function loadMessages() {
+    try {
+      const res = await fetch(BACKEND_URL);
+
+      if (!res.ok) {
+        throw new Error(`HTTP error: ${res.status}`);
+      }
+      const messages = await res.json();
+
+      renderMessages(messages);
+
     } catch (err) {
       console.error("Failed to load messages:", err);
       messagesList.innerHTML = "<li>Failed to load messages</li>";
@@ -77,6 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   loadMessages();
-  setInterval(loadMessages, 1000);
+  setInterval(loadMessages, POLLING_INTERVAL_MS);
 });
 
